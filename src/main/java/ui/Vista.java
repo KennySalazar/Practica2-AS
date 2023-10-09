@@ -462,7 +462,7 @@ public class Vista extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ESTADO", "TOKEN", "SIGUIENTE ESTADO"
+                "ESTADO ACTUAL", "TOKEN", "SIGUIENTE ESTADO"
             }
         ));
         jScrollPane1.setViewportView(tablaEstados);
@@ -532,6 +532,7 @@ public class Vista extends javax.swing.JFrame {
             this.tablaEstados.setModel(tabla1);
             
             this.tablaSimbolos.removeAll();
+            
         }
     }//GEN-LAST:event_botonAnalizarEntradaActionPerformed
 
@@ -568,7 +569,8 @@ public class Vista extends javax.swing.JFrame {
 
         }
     }
-
+        //LLENAR TABLA 
+    
     public static void llenarTabla(int estadoActual, ArrayList<Token> tokens, int tabla[][]) {
         DefaultTableModel tabla1 = new DefaultTableModel();
         String[] columna = new String[3];
