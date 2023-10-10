@@ -19,11 +19,15 @@ import ui.Vista;
 public class AnalizadorSintactico {
 
     public ArrayList<String> erroresSintacticos;
+    public ArrayList<String> erroresLexicos;
+    public ArrayList<Token> EtokensLexicos;
+    public ArrayList<Token> EtokensSintacticos;//errores
     int estadoActual = 0;
     public DefaultTableModel tabla1 = new DefaultTableModel();
 
     public AnalizadorSintactico() {
         erroresSintacticos = new ArrayList<>();
+        erroresLexicos = new ArrayList<>();
     }
     public Transiciones transicion = new Transiciones();
     public ArrayList<ReporteTablaDeSimbolos> listaRepTS;
@@ -37,17 +41,24 @@ public class AnalizadorSintactico {
     String signo = "N";
 
     public String analizarSintatico(ArrayList<Token> tokens) {
+        erroresSintacticos = new ArrayList<>();
+        erroresLexicos = new ArrayList<>();
         listaRepTS = new ArrayList<>();
+        EtokensLexicos = new ArrayList<>();
+        EtokensSintacticos = new ArrayList<>();
         tabla1 = new DefaultTableModel();
         tabla1.addColumn("#");
-        tabla1.addColumn("ESTADO");
+        tabla1.addColumn("ESTADO ACTUAL");
         tabla1.addColumn("TOKEN");
         tabla1.addColumn("SIGUIENTE ESTADO");
 
         String valor = "Error sintactico";
         estadoActual = 1;
         for (int i = 0; i < tokens.size(); i++) {
-            if (tokens.get(i).getTipo() != Token.Tipo.COMENTARIO) {
+            if (tokens.get(i).getTipo() == Token.Tipo.ERROR) {
+                EtokensLexicos.add(tokens.get(i));
+                erroresLexicos.add("Error Léxico en la linea: " + tokens.get(i).getLinea() + ", columna: " + tokens.get(i).getColumna());
+            } else if (tokens.get(i).getTipo() != Token.Tipo.COMENTARIO) {
                 System.out.println("Estado: " + estadoActual + " Token: " + tokens.get(i).getLexema() + ", transicion a: " + transicion.tabla[estadoActual][transicion.devolverNumeroPorToken(tokens.get(i))]);
                 llenarTabla(estadoActual, tokens.get(i), transicion.tabla[estadoActual][transicion.devolverNumeroPorToken(tokens.get(i))], i);
                 estadoActual = transicion.tabla[estadoActual][transicion.devolverNumeroPorToken(tokens.get(i))];
@@ -114,6 +125,7 @@ public class AnalizadorSintactico {
                             && tokens.get(i + 1).getTipo() != Token.Tipo.OPERADOR_LOGICO_Y
                             && tokens.get(i + 1).getTipo() != Token.Tipo.OPERADOR_LOGICO_O
                             && tokens.get(i + 1).getTipo() != Token.Tipo.PARENTESI_CIERRE
+                            && tokens.get(i + 1).getTipo() != Token.Tipo.ERROR
                             && tokens.get(i + 1).getTipo() != Token.Tipo.PARENTESI_APERTURA)))) {
                         estadoActual = 1;
                         valorTS = valorTS + tokens.get(i).getLexema();
@@ -140,7 +152,8 @@ public class AnalizadorSintactico {
                     } else if (((estadoActual == 4 && (tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_SUMA
                             || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_RESTA || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_MULTIPLICACION
                             || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_DIVISION || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_MODULO
-                            || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_EXPONENTE)))) {
+                            || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_EXPONENTE
+                            || tokens.get(i + 1).getTipo() == Token.Tipo.ERROR)))) {
                         tipoS1 = tokens.get(i).getTipo();
                         valorTS = valorTS + tokens.get(i).getLexema();
 
@@ -162,6 +175,7 @@ public class AnalizadorSintactico {
                         }
                     } else if (estadoActual == 0) {
                         erroresSintacticos.add("Error sintactico en la linea: " + tokens.get(i).getLinea() + ", columna: " + tokens.get(i).getColumna());
+                        EtokensSintacticos.add(tokens.get(i));
                     }
                 } catch (IndexOutOfBoundsException e) {//excepcion de que ya no hay ningun token mas, para el estado cuatro
                     if (estadoActual == 4) {
@@ -194,25 +208,63 @@ public class AnalizadorSintactico {
 
                 valor = verificarEstado(estadoActual);
             }
-
+            verificarTipoSimbolo(tokens.get(i));
         }
 
         System.out.println(valor);
         return valor;
     }
 
+    public void verificarTipoSimbolo(Token token) {
+        switch (token.getTipo()) {
+            case PALABRA_RESERVADA_DEF:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "FUNCION", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_IF:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_ELSE:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_ELIF:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_WHILE:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_FOR:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_PRINT:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_YIELD:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_RETURN:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna());
+                break;
+            case PALABRA_RESERVADA_IN:
+                agregarRepATablaSimbolos(token.getLexema(), "-", "PALABRA RESERVADO", token.getLinea(), token.getColumna());
+                break;
+            default:
+        }
+    }
+
     public void agregarRepATablaSimbolos(String simbolo, String valor, String tipo, int linea, int columna) {
         ReporteTablaDeSimbolos repTS = new ReporteTablaDeSimbolos(simbolo, tipo, valor, linea, columna);
+        
         listaRepTS.add(repTS);
         simbolo = "";
         signo = "N";
         valor = "";
         tipoS1 = null;
         tipo = "";
+        
     }
 
     public String asignarTipo(Tipo tipo) {
-        String retorno = "null";
+        String retorno = "Indefinido";
         switch (tipo) {
             case CONSTANTE_ENTERA:
                 retorno = "entero";

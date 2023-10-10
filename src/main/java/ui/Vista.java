@@ -30,8 +30,11 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form Vista
      */
+    numeroLinea numeroLinea;
     public Vista() {
         initComponents();
+        numeroLinea = new numeroLinea(entrada1);
+        jScrollPane8.setRowHeaderView(numeroLinea);
     }
 
     /**
@@ -46,10 +49,10 @@ public class Vista extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel5 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        entrada1 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         CargarDatos1 = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        entrada1 = new javax.swing.JTextArea();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         salida = new javax.swing.JTextArea();
@@ -75,7 +78,11 @@ public class Vista extends javax.swing.JFrame {
         jDesktopPane6 = new javax.swing.JDesktopPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jDesktopPane15 = new javax.swing.JDesktopPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tablaDeEL = new javax.swing.JTable();
         jDesktopPane16 = new javax.swing.JDesktopPane();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tablaDeES = new javax.swing.JTable();
         jDesktopPane3 = new javax.swing.JDesktopPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEstados = new javax.swing.JTable();
@@ -86,11 +93,6 @@ public class Vista extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CARGAR ARCHIVO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Black", 2, 14), new java.awt.Color(0, 0, 255))); // NOI18N
-
-        entrada1.setColumns(20);
-        entrada1.setRows(5);
-        entrada1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        jScrollPane2.setViewportView(entrada1);
 
         jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         jLabel2.setText("ENTRADA DEL TEXTO");
@@ -106,17 +108,30 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane8.setBackground(new java.awt.Color(51, 51, 51));
+        jScrollPane8.setForeground(new java.awt.Color(102, 255, 255));
+
+        entrada1.setBackground(new java.awt.Color(51, 51, 51));
+        entrada1.setColumns(20);
+        entrada1.setForeground(new java.awt.Color(102, 255, 255));
+        entrada1.setRows(5);
+        jScrollPane8.setViewportView(entrada1);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(183, 183, 183)
-                .addComponent(CargarDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(322, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(183, 183, 183)
+                        .addComponent(CargarDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane8)))
                 .addContainerGap())
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,16 +140,18 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CargarDatos1)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(153, 153, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ANALIZADOR SINTACTICO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Black", 2, 14), new java.awt.Color(255, 102, 0))); // NOI18N
         jPanel6.setForeground(new java.awt.Color(255, 102, 0));
 
+        salida.setBackground(new java.awt.Color(51, 51, 51));
         salida.setColumns(20);
+        salida.setForeground(new java.awt.Color(0, 204, 0));
         salida.setRows(5);
         salida.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         jScrollPane3.setViewportView(salida);
@@ -164,6 +181,7 @@ public class Vista extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel1.setBackground(new java.awt.Color(51, 153, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         botonAnalizarEntrada.setBackground(new java.awt.Color(255, 255, 255));
@@ -389,28 +407,70 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Funciones o Métodos", jDesktopPane5);
 
+        tablaDeEL.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "TOKEN", "LÍNEA", "COLUMNA"
+            }
+        ));
+        jScrollPane6.setViewportView(tablaDeEL);
+
+        jDesktopPane15.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane15Layout = new javax.swing.GroupLayout(jDesktopPane15);
         jDesktopPane15.setLayout(jDesktopPane15Layout);
         jDesktopPane15Layout.setHorizontalGroup(
             jDesktopPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane15Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jDesktopPane15Layout.setVerticalGroup(
             jDesktopPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Léxicos", jDesktopPane15);
+
+        tablaDeES.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "TOKEN", "LÍNEA", "COLUMNA"
+            }
+        ));
+        jScrollPane7.setViewportView(tablaDeES);
+
+        jDesktopPane16.setLayer(jScrollPane7, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane16Layout = new javax.swing.GroupLayout(jDesktopPane16);
         jDesktopPane16.setLayout(jDesktopPane16Layout);
         jDesktopPane16Layout.setHorizontalGroup(
             jDesktopPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane16Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jDesktopPane16Layout.setVerticalGroup(
             jDesktopPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Sintácticos", jDesktopPane16);
@@ -421,13 +481,13 @@ public class Vista extends javax.swing.JFrame {
         jDesktopPane6.setLayout(jDesktopPane6Layout);
         jDesktopPane6Layout.setHorizontalGroup(
             jDesktopPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+            .addComponent(jTabbedPane5)
         );
         jDesktopPane6Layout.setVerticalGroup(
             jDesktopPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .addComponent(jTabbedPane5)
                 .addContainerGap())
         );
 
@@ -515,30 +575,33 @@ public class Vista extends javax.swing.JFrame {
         ArrayList<Token> tokens = al.analizarCodigoFuente();
         AnalizadorSintactico aS = new AnalizadorSintactico();
         salida.setText(aS.analizarSintatico(tokens));
-        for (String error : aS.erroresSintacticos) {
+        llenarTablaErroresLexicos_Sintacticos(aS.EtokensLexicos, this.tablaDeEL);
+        llenarTablaErroresLexicos_Sintacticos(aS.EtokensSintacticos, this.tablaDeES);
+        /*for (String error : aS.erroresSintacticos) {
+        salida.setText(salida.getText() + "\n" + error);
+        }*/
+        for (int i = 0; i < 1; i++) {
+            try {
+                salida.setText(salida.getText() + "\n" + aS.erroresSintacticos.get(0));
+            } catch (IndexOutOfBoundsException e) {
+            }
+        }
+        for (String error : aS.erroresLexicos) {
             salida.setText(salida.getText() + "\n" + error);
         }
+        if (aS.erroresLexicos.size() == 0) {
+            salida.setText(salida.getText() + "\nAnalisis Lexico correctamente");
+        }
+        this.tablaEstados.setModel(aS.tabla1);
         if (aS.erroresSintacticos.size() == 0) {
-            this.tablaEstados.setModel(aS.tabla1);
             LlenarTablaSimbolos(aS.listaRepTS);
         } else {
-            this.tablaEstados.removeAll();
-            
-            DefaultTableModel tabla1 = new DefaultTableModel();
-            tabla1.addColumn("#");
-            tabla1.addColumn("ESTADO");
-            tabla1.addColumn("TOKEN");
-            tabla1.addColumn("SIGUIENTE ESTADO");
-            this.tablaEstados.setModel(tabla1);
-            
+
             this.tablaSimbolos.removeAll();
-            
+
         }
     }//GEN-LAST:event_botonAnalizarEntradaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public void abrirFileChooser() {
         JFileChooser jf = new JFileChooser();
         jf.showOpenDialog(this);
@@ -569,14 +632,14 @@ public class Vista extends javax.swing.JFrame {
 
         }
     }
-        //LLENAR TABLA 
-    
+    //LLENAR TABLA 
+
     public static void llenarTabla(int estadoActual, ArrayList<Token> tokens, int tabla[][]) {
         DefaultTableModel tabla1 = new DefaultTableModel();
         String[] columna = new String[3];
         Transiciones transicion = new Transiciones();
 
-        tabla1.addColumn("ESTADO");
+        tabla1.addColumn("ESTADO ACTUAL");
         tabla1.addColumn("TOKEN");
         tabla1.addColumn("SIGUIENTE ESTADO");
 
@@ -592,23 +655,47 @@ public class Vista extends javax.swing.JFrame {
 
     }
 
+    public void llenarTablaErroresLexicos_Sintacticos(ArrayList<Token> tokens, JTable tablaE) {
+
+        try {
+            DefaultTableModel tabla1 = new DefaultTableModel();
+            String[] columna = new String[3];
+            Transiciones transicion = new Transiciones();
+
+            tabla1.addColumn("TOKEN");
+            tabla1.addColumn("LINEA");
+            tabla1.addColumn("COLUMNA");
+
+            for (Token token : tokens) {
+                columna[0] = token.getLexema();
+                columna[1] = String.valueOf(token.getLinea());
+                columna[2] = String.valueOf(token.getColumna());
+
+                tabla1.addRow(columna);
+            }
+
+            tablaE.setModel(tabla1);
+        } catch (NullPointerException e) {
+        }
+
+    }
+
     public void LlenarTablaSimbolos(ArrayList<ReporteTablaDeSimbolos> reportesTS) {
         DefaultTableModel tabla1 = new DefaultTableModel();
         String[] columna = new String[5];
-        
 
         tabla1.addColumn("Simbolo");
         tabla1.addColumn("Tipo");
         tabla1.addColumn("Valor");
         tabla1.addColumn("Linea");
         tabla1.addColumn("Columna");
-        
-        for(ReporteTablaDeSimbolos rep: reportesTS){
-            columna[0]=rep.getSimbolo();
-            columna[1]=rep.getTipo();
-            columna[2]=rep.getValor();
-            columna[3]=String.valueOf(rep.getLinea());
-            columna[4]=String.valueOf(rep.getColumna());
+
+        for (ReporteTablaDeSimbolos rep : reportesTS) {
+            columna[0] = rep.getSimbolo();
+            columna[1] = rep.getTipo();
+            columna[2] = rep.getValor();
+            columna[3] = String.valueOf(rep.getLinea());
+            columna[4] = String.valueOf(rep.getColumna());
             tabla1.addRow(columna);
         }
         this.tablaSimbolos.setModel(tabla1);
@@ -638,10 +725,12 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
@@ -649,6 +738,8 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea salida;
+    private javax.swing.JTable tablaDeEL;
+    private javax.swing.JTable tablaDeES;
     public static javax.swing.JTable tablaEstados;
     private javax.swing.JTable tablaSimbolos;
     // End of variables declaration//GEN-END:variables
