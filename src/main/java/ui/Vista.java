@@ -8,6 +8,8 @@ import ALexico.AnalizadorLexico;
 import ALexico.Token;
 import ASintactico.AnalizadorSintactico;
 import ASintactico.Transiciones;
+import Reportes.FuncionesYSusParametros;
+import Reportes.ReporteCantidadLLamadasFunctions;
 import Reportes.ReporteTablaDeSimbolos;
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,6 +33,7 @@ public class Vista extends javax.swing.JFrame {
      * Creates new form Vista
      */
     numeroLinea numeroLinea;
+
     public Vista() {
         initComponents();
         numeroLinea = new numeroLinea(entrada1);
@@ -68,13 +71,19 @@ public class Vista extends javax.swing.JFrame {
         tablaSimbolos = new javax.swing.JTable();
         jDesktopPane10 = new javax.swing.JDesktopPane();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jDesktopPane11 = new javax.swing.JDesktopPane();
+        TSXBloqueCodigo = new javax.swing.JTable();
         jDesktopPane5 = new javax.swing.JDesktopPane();
         jTabbedPane4 = new javax.swing.JTabbedPane();
-        jDesktopPane12 = new javax.swing.JDesktopPane();
         jDesktopPane13 = new javax.swing.JDesktopPane();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        cantidadLlamadasAFuncionTable = new javax.swing.JTable();
         jDesktopPane14 = new javax.swing.JDesktopPane();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        parametrosFunciones = new javax.swing.JTable();
+        jDesktopPane12 = new javax.swing.JDesktopPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaCantidadFOM = new javax.swing.JTable();
+        cantidadFOMLabel = new javax.swing.JLabel();
         jDesktopPane6 = new javax.swing.JDesktopPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jDesktopPane15 = new javax.swing.JDesktopPane();
@@ -115,6 +124,9 @@ public class Vista extends javax.swing.JFrame {
         entrada1.setColumns(20);
         entrada1.setForeground(new java.awt.Color(102, 255, 255));
         entrada1.setRows(5);
+        entrada1.setCaretColor(new java.awt.Color(255, 255, 255));
+        entrada1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        entrada1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jScrollPane8.setViewportView(entrada1);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -284,7 +296,7 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Globales", jDesktopPane9);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TSXBloqueCodigo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -295,7 +307,7 @@ public class Vista extends javax.swing.JFrame {
                 "Símbolo", "Tipo", "Valor", "Línea", "Columna"
             }
         ));
-        jScrollPane5.setViewportView(jTable2);
+        jScrollPane5.setViewportView(TSXBloqueCodigo);
 
         jDesktopPane10.setLayer(jScrollPane5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -317,19 +329,6 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Por bloque de código", jDesktopPane10);
 
-        javax.swing.GroupLayout jDesktopPane11Layout = new javax.swing.GroupLayout(jDesktopPane11);
-        jDesktopPane11.setLayout(jDesktopPane11Layout);
-        jDesktopPane11Layout.setHorizontalGroup(
-            jDesktopPane11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jDesktopPane11Layout.setVerticalGroup(
-            jDesktopPane11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jTabbedPane3.addTab("Lista de instrucciones", jDesktopPane11);
-
         jDesktopPane4.setLayer(jTabbedPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane4Layout = new javax.swing.GroupLayout(jDesktopPane4);
@@ -350,44 +349,112 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Tabla de Símbolos", jDesktopPane4);
 
-        javax.swing.GroupLayout jDesktopPane12Layout = new javax.swing.GroupLayout(jDesktopPane12);
-        jDesktopPane12.setLayout(jDesktopPane12Layout);
-        jDesktopPane12Layout.setHorizontalGroup(
-            jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jDesktopPane12Layout.setVerticalGroup(
-            jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        cantidadLlamadasAFuncionTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nombre Funcion", "Cantidad Veces Llamadas"
+            }
+        ));
+        jScrollPane9.setViewportView(cantidadLlamadasAFuncionTable);
 
-        jTabbedPane4.addTab("Cantidad de Funciones o Métodos", jDesktopPane12);
+        jDesktopPane13.setLayer(jScrollPane9, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane13Layout = new javax.swing.GroupLayout(jDesktopPane13);
         jDesktopPane13.setLayout(jDesktopPane13Layout);
         jDesktopPane13Layout.setHorizontalGroup(
             jDesktopPane13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
         );
         jDesktopPane13Layout.setVerticalGroup(
             jDesktopPane13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane13Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Cantidad de veces que se llama a una Función", jDesktopPane13);
+
+        parametrosFunciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nombre Funcion", "Parametros"
+            }
+        ));
+        jScrollPane10.setViewportView(parametrosFunciones);
+
+        jDesktopPane14.setLayer(jScrollPane10, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane14Layout = new javax.swing.GroupLayout(jDesktopPane14);
         jDesktopPane14.setLayout(jDesktopPane14Layout);
         jDesktopPane14Layout.setHorizontalGroup(
             jDesktopPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane14Layout.createSequentialGroup()
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jDesktopPane14Layout.setVerticalGroup(
             jDesktopPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane14Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Parametros de una Función ", jDesktopPane14);
+
+        tablaCantidadFOM.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Simbolo", "Tipo", "Valor", "Linea", "Columna"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaCantidadFOM);
+
+        cantidadFOMLabel.setText("jLabel1");
+
+        jDesktopPane12.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane12.setLayer(cantidadFOMLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane12Layout = new javax.swing.GroupLayout(jDesktopPane12);
+        jDesktopPane12.setLayout(jDesktopPane12Layout);
+        jDesktopPane12Layout.setHorizontalGroup(
+            jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cantidadFOMLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jDesktopPane12Layout.setVerticalGroup(
+            jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane12Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(cantidadFOMLabel)
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+
+        jTabbedPane4.addTab("Cantidad de Funciones o Métodos", jDesktopPane12);
 
         jDesktopPane5.setLayer(jTabbedPane4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -395,13 +462,13 @@ public class Vista extends javax.swing.JFrame {
         jDesktopPane5.setLayout(jDesktopPane5Layout);
         jDesktopPane5Layout.setHorizontalGroup(
             jDesktopPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+            .addComponent(jTabbedPane4)
         );
         jDesktopPane5Layout.setVerticalGroup(
             jDesktopPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .addComponent(jTabbedPane4)
                 .addContainerGap())
         );
 
@@ -594,13 +661,25 @@ public class Vista extends javax.swing.JFrame {
         }
         this.tablaEstados.setModel(aS.tabla1);
         if (aS.erroresSintacticos.size() == 0) {
-            LlenarTablaSimbolos(aS.listaRepTS);
+            LlenarTablaSimbolos(aS.listaRepTS, this.tablaSimbolos);
+            LlenarTablaSimbolos(aS.listaRepTSXBloqueCodigo, this.TSXBloqueCodigo);
+            LlenarTablaSimbolos(aS.cantidadFuncionesOMetodos, this.tablaCantidadFOM);
+            darValorALabelCantidadFOM("Cantidad de funciones: " + aS.cantidadFuncionesOMetodos.size());
+            llenarTablaCantidadVecesLlamadaAFuncion(aS.funcionesLLamadasCantidad, this.cantidadLlamadasAFuncionTable);
+            llenarTablaParametrosFunciones(aS.funcionesYsusParametros, this.parametrosFunciones);
         } else {
-
-            this.tablaSimbolos.removeAll();
-
+            Clear_Table1(this.tablaSimbolos);
+            Clear_Table1(this.TSXBloqueCodigo);
+            Clear_Table1(this.tablaCantidadFOM);
+            Clear_Table1(this.cantidadLlamadasAFuncionTable);
+            Clear_Table1(this.parametrosFunciones);
+            darValorALabelCantidadFOM(" ");
         }
     }//GEN-LAST:event_botonAnalizarEntradaActionPerformed
+
+    public void darValorALabelCantidadFOM(String valor) {
+        this.cantidadFOMLabel.setText(valor);
+    }
 
     public void abrirFileChooser() {
         JFileChooser jf = new JFileChooser();
@@ -612,6 +691,13 @@ public class Vista extends javax.swing.JFrame {
             leerArchivoDeEntrada(archivo.getAbsolutePath(), entrada1);
         }
 
+    }
+
+    private void Clear_Table1(JTable tabla1) {
+        DefaultTableModel diseño = (DefaultTableModel) tabla1.getModel();
+        while (diseño.getRowCount() > 0) {
+            diseño.removeRow(0);
+        }
     }
 
     public void leerArchivoDeEntrada(String nombre, JTextArea areaEntrada) {
@@ -655,6 +741,47 @@ public class Vista extends javax.swing.JFrame {
 
     }
 
+    public void llenarTablaCantidadVecesLlamadaAFuncion(ArrayList<ReporteCantidadLLamadasFunctions> lista, JTable tabla) {
+
+        try {
+            DefaultTableModel tabla1 = new DefaultTableModel();
+            String[] columna = new String[2];
+
+            tabla1.addColumn("Nombre Funcion");
+            tabla1.addColumn("Cantidad Veces Llamadas");
+
+            for (ReporteCantidadLLamadasFunctions rep : lista) {
+                columna[0] = rep.getNombreFuncion();
+                columna[1] = String.valueOf(rep.getCantidad());
+
+                tabla1.addRow(columna);
+            }
+
+            tabla.setModel(tabla1);
+        } catch (NullPointerException e) {
+        }
+    }
+
+    public void llenarTablaParametrosFunciones(ArrayList<FuncionesYSusParametros> lista, JTable tabla) {
+        try {
+            DefaultTableModel tabla1 = new DefaultTableModel();
+            String[] columna = new String[2];
+
+            tabla1.addColumn("Nombre Funcion");
+            tabla1.addColumn("Parametros");
+
+            for (FuncionesYSusParametros rep : lista) {
+                columna[0] = rep.getNombre();
+                columna[1] = rep.getParametros();
+
+                tabla1.addRow(columna);
+            }
+
+            tabla.setModel(tabla1);
+        } catch (NullPointerException e) {
+        }
+    }
+
     public void llenarTablaErroresLexicos_Sintacticos(ArrayList<Token> tokens, JTable tablaE) {
 
         try {
@@ -680,34 +807,40 @@ public class Vista extends javax.swing.JFrame {
 
     }
 
-    public void LlenarTablaSimbolos(ArrayList<ReporteTablaDeSimbolos> reportesTS) {
-        DefaultTableModel tabla1 = new DefaultTableModel();
-        String[] columna = new String[5];
+    public void LlenarTablaSimbolos(ArrayList<ReporteTablaDeSimbolos> reportesTS, JTable tabla) {
+        try {
+            DefaultTableModel tabla1 = new DefaultTableModel();
+            String[] columna = new String[5];
 
-        tabla1.addColumn("Simbolo");
-        tabla1.addColumn("Tipo");
-        tabla1.addColumn("Valor");
-        tabla1.addColumn("Linea");
-        tabla1.addColumn("Columna");
+            tabla1.addColumn("Simbolo");
+            tabla1.addColumn("Tipo");
+            tabla1.addColumn("Valor");
+            tabla1.addColumn("Linea");
+            tabla1.addColumn("Columna");
 
-        for (ReporteTablaDeSimbolos rep : reportesTS) {
-            columna[0] = rep.getSimbolo();
-            columna[1] = rep.getTipo();
-            columna[2] = rep.getValor();
-            columna[3] = String.valueOf(rep.getLinea());
-            columna[4] = String.valueOf(rep.getColumna());
-            tabla1.addRow(columna);
+            for (ReporteTablaDeSimbolos rep : reportesTS) {
+                columna[0] = rep.getSimbolo();
+                columna[1] = rep.getTipo();
+                columna[2] = rep.getValor();
+                columna[3] = String.valueOf(rep.getLinea());
+                columna[4] = String.valueOf(rep.getColumna());
+                tabla1.addRow(columna);
+            }
+            tabla.setModel(tabla1);
+        } catch (NullPointerException e) {
         }
-        this.tablaSimbolos.setModel(tabla1);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CargarDatos1;
+    private javax.swing.JTable TSXBloqueCodigo;
     private javax.swing.JButton botonAnalizarEntrada;
+    private javax.swing.JLabel cantidadFOMLabel;
+    private javax.swing.JTable cantidadLlamadasAFuncionTable;
     private javax.swing.JTextArea entrada1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane10;
-    private javax.swing.JDesktopPane jDesktopPane11;
     private javax.swing.JDesktopPane jDesktopPane12;
     private javax.swing.JDesktopPane jDesktopPane13;
     private javax.swing.JDesktopPane jDesktopPane14;
@@ -725,19 +858,23 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable parametrosFunciones;
     private javax.swing.JTextArea salida;
+    private javax.swing.JTable tablaCantidadFOM;
     private javax.swing.JTable tablaDeEL;
     private javax.swing.JTable tablaDeES;
     public static javax.swing.JTable tablaEstados;

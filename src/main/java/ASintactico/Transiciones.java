@@ -184,7 +184,6 @@ public class Transiciones {
         tabla[33][1]=34;//ESTADO[33][ID]-->E34
         tabla[33][5]=34;//ESTADO[33][NUMERO]-->E34
         tabla[33][6]=34;//ESTADO[33][CADENA]-->E34
-        tabla[34][8]=33;//ESTADO[34][,]-->E33
         tabla[34][21]=33;//ESTADO[34][+]-->E33
         tabla[34][22]=33;//ESTADO[34][-]-->E33
         tabla[34][23]=33;//ESTADO[34][*]-->E33
@@ -219,13 +218,12 @@ public class Transiciones {
         tabla[45][5]=46;//ESTADO[45][NUMERO]-->E46
         tabla[45][6]=46;//ESTADO[45][CADENA]-->E46
         tabla[45][31]=60;//ESTADO[45][(]-->E60
-        tabla[46][8]=45;//ESTADO[45][,]-->E60
-        tabla[46][21]=45;//ESTADO[45][+]-->E60
-        tabla[46][22]=45;//ESTADO[46][-]-->E60
-        tabla[46][23]=45;//ESTADO[46][*]-->E60
-        tabla[46][24]=45;//ESTADO[46][/]-->E60
-        tabla[46][34]=45;//ESTADO[46][%]-->E60
-        tabla[46][37]=45;//ESTADO[46][**]-->E60
+        tabla[46][21]=45;//ESTADO[46][+]-->E45
+        tabla[46][22]=45;//ESTADO[46][-]-->E45
+        tabla[46][23]=45;//ESTADO[46][*]-->E45
+        tabla[46][24]=45;//ESTADO[46][/]-->E45
+        tabla[46][34]=45;//ESTADO[46][%]-->E45
+        tabla[46][37]=45;//ESTADO[46][**]-->E45
         tabla[46][31]=60;//ESTADO[46][(]-->E60
         tabla[46][16]=94;//ESTADO[46][CUALQUIER SIGNO DE COMPARACIÓN]-->E94
         tabla[46][27]=94;//ESTADO[46][IN]-->E94

@@ -6,6 +6,8 @@ package ASintactico;
 
 import ALexico.Token;
 import ALexico.Token.Tipo;
+import Reportes.FuncionesYSusParametros;
+import Reportes.ReporteCantidadLLamadasFunctions;
 import Reportes.ReporteTablaDeSimbolos;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -31,6 +33,11 @@ public class AnalizadorSintactico {
     }
     public Transiciones transicion = new Transiciones();
     public ArrayList<ReporteTablaDeSimbolos> listaRepTS;
+    public ArrayList<ReporteTablaDeSimbolos> listaRepTSXBloqueCodigo;//reportes por bloque de codigo
+    public ArrayList<ReporteTablaDeSimbolos> cantidadFuncionesOMetodos;
+    public ArrayList<ReporteCantidadLLamadasFunctions> funcionesLLamadasCantidad;
+
+    public ArrayList<FuncionesYSusParametros> funcionesYsusParametros;//reporte de parametros de las funciones
     String simbolo = "N";
     String tipo = "N";
     Tipo tipoS1;
@@ -44,6 +51,10 @@ public class AnalizadorSintactico {
         erroresSintacticos = new ArrayList<>();
         erroresLexicos = new ArrayList<>();
         listaRepTS = new ArrayList<>();
+        listaRepTSXBloqueCodigo = new ArrayList<>();
+        cantidadFuncionesOMetodos = new ArrayList<>();
+        funcionesLLamadasCantidad = new ArrayList<>();
+        funcionesYsusParametros = new ArrayList<>();
         EtokensLexicos = new ArrayList<>();
         EtokensSintacticos = new ArrayList<>();
         tabla1 = new DefaultTableModel();
@@ -51,6 +62,9 @@ public class AnalizadorSintactico {
         tabla1.addColumn("ESTADO ACTUAL");
         tabla1.addColumn("TOKEN");
         tabla1.addColumn("SIGUIENTE ESTADO");
+        //variables para los parametros de una funcion
+        Boolean isfunction = false;
+        FuncionesYSusParametros funcionYParametro = new FuncionesYSusParametros("", "");
 
         String valor = "Error sintactico";
         estadoActual = 1;
@@ -147,7 +161,7 @@ public class AnalizadorSintactico {
                         }
                         System.out.println("Simbolo: " + simbolo + ",Valor: " + valorTS + ", Tipo: " + tipo + ", Linea: " + linea
                                 + ", Columna: " + columna);
-                        agregarRepATablaSimbolos(simbolo, valorTS, tipo, linea, columna);
+                        agregarRepATablaSimbolos(simbolo, valorTS, tipo, linea, columna, this.listaRepTS);
 
                     } else if (((estadoActual == 4 && (tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_SUMA
                             || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_RESTA || tokens.get(i + 1).getTipo() == Token.Tipo.ARITMETICO_MULTIPLICACION
@@ -173,6 +187,22 @@ public class AnalizadorSintactico {
                         } else {
                             signo = tokens.get(i).getLexema();
                         }
+                    } else if (estadoActual == 43) {
+                        isfunction = true;
+                    } else if (estadoActual == 38 && isfunction) {
+                        funcionYParametro.setNombre(tokens.get(i).getLexema());
+                    } else if (estadoActual == 42 && isfunction) {
+                        if (tokens.get(i + 1).getTipo() == Tipo.PARENTESI_CIERRE) {
+
+                            funcionYParametro.setParametros(funcionYParametro.getParametros() + tokens.get(i).getLexema());
+
+                        } else {
+                            funcionYParametro.setParametros(funcionYParametro.getParametros() + tokens.get(i).getLexema() + ", ");
+                        }
+                    } else if (estadoActual == 40 && isfunction) {
+                        funcionesYsusParametros.add(funcionYParametro);
+                        funcionYParametro = new FuncionesYSusParametros("", ""); //nombre,parametro
+                        isfunction = false;
                     } else if (estadoActual == 0) {
                         erroresSintacticos.add("Error sintactico en la linea: " + tokens.get(i).getLinea() + ", columna: " + tokens.get(i).getColumna());
                         EtokensSintacticos.add(tokens.get(i));
@@ -198,7 +228,7 @@ public class AnalizadorSintactico {
                         }
                         System.out.println("Simbolo: " + simbolo + ",Valor: " + valorTS + ", Tipo: " + tipo + ", Linea: " + linea
                                 + ", Columna: " + columna);
-                        agregarRepATablaSimbolos(simbolo, valorTS, tipo, linea, columna);
+                        agregarRepATablaSimbolos(simbolo, valorTS, tipo, linea, columna, this.listaRepTS);
                         estadoActual = 1;
                     } else {
                         estadoActual = 1;
@@ -208,59 +238,110 @@ public class AnalizadorSintactico {
 
                 valor = verificarEstado(estadoActual);
             }
-            verificarTipoSimbolo(tokens.get(i));
+            try {
+                if (tokens.get(i).getTipo() == Tipo.PALABRA_RESERVADA_DEF) {
+                    verificarTipoSimbolo(tokens.get(i + 1), tokens.get(i));
+                } else if (tokens.get(i).getTipo() == Tipo.IDENTIFICADOR && tokens.get(i + 1).getTipo() == Tipo.PARENTESI_APERTURA
+                        && tokens.get(i - 1).getTipo() != Tipo.PALABRA_RESERVADA_DEF
+                        && tokens.get(i - 1).getTipo() != Tipo.PALABRA_RESERVADA_IN) {
+                    if (!existeFuncion(tokens.get(i).getLexema(), this.funcionesLLamadasCantidad)) {
+                        this.funcionesLLamadasCantidad.add(new ReporteCantidadLLamadasFunctions(tokens.get(i).getLexema(), 1));
+                    }
+                } else {
+                    verificarTipoSimbolo(tokens.get(i), tokens.get(i));
+                }
+            } catch (IndexOutOfBoundsException e) {
+            }
+
         }
 
         System.out.println(valor);
         return valor;
     }
 
-    public void verificarTipoSimbolo(Token token) {
+    public void verificarTipoSimbolo(Token token, Token token1) {
         switch (token.getTipo()) {
-            case PALABRA_RESERVADA_DEF:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "FUNCION", token.getLinea(), token.getColumna());
+            case IDENTIFICADOR:
+                if (token1.getTipo() == Tipo.PALABRA_RESERVADA_DEF) {
+                    agregarRepATablaSimbolos(token.getLexema(), "-", "FUNCIÓN", token.getLinea(), token.getColumna(), this.listaRepTS);
+                    agregarRepATablaSimbolosXBloqueCodigo(token.getLexema(), "-", "FUNCIÓN", token.getLinea(), token.getColumna());
+                    agregarRepATablaSimbolos(token.getLexema(), "-", "FUNCIÓN", token.getLinea(), token.getColumna(), this.cantidadFuncionesOMetodos);
+                }
+
                 break;
             case PALABRA_RESERVADA_IF:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna(), this.listaRepTS);
+                agregarRepATablaSimbolosXBloqueCodigo(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
                 break;
             case PALABRA_RESERVADA_ELSE:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna(), this.listaRepTS);
+                agregarRepATablaSimbolosXBloqueCodigo(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
                 break;
             case PALABRA_RESERVADA_ELIF:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna(), this.listaRepTS);
+                agregarRepATablaSimbolosXBloqueCodigo(token.getLexema(), "-", "CONDICIONAL", token.getLinea(), token.getColumna());
                 break;
             case PALABRA_RESERVADA_WHILE:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna(), this.listaRepTS);
+                agregarRepATablaSimbolosXBloqueCodigo(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna());
                 break;
             case PALABRA_RESERVADA_FOR:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna(), this.listaRepTS);
+                agregarRepATablaSimbolosXBloqueCodigo(token.getLexema(), "-", "CICLO", token.getLinea(), token.getColumna());
                 break;
             case PALABRA_RESERVADA_PRINT:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna(), this.listaRepTS);
                 break;
             case PALABRA_RESERVADA_YIELD:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna(), this.listaRepTS);
                 break;
             case PALABRA_RESERVADA_RETURN:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCIÓN", token.getLinea(), token.getColumna(), this.listaRepTS);
                 break;
             case PALABRA_RESERVADA_IN:
-                agregarRepATablaSimbolos(token.getLexema(), "-", "PALABRA RESERVADO", token.getLinea(), token.getColumna());
+                agregarRepATablaSimbolos(token.getLexema(), "-", "INSTRUCCION", token.getLinea(), token.getColumna(), this.listaRepTS);
                 break;
             default:
+
         }
     }
 
-    public void agregarRepATablaSimbolos(String simbolo, String valor, String tipo, int linea, int columna) {
+    public void agregarRepATablaSimbolos(String simbolo, String valor, String tipo, int linea, int columna, ArrayList<ReporteTablaDeSimbolos> lista) {
         ReporteTablaDeSimbolos repTS = new ReporteTablaDeSimbolos(simbolo, tipo, valor, linea, columna);
-        
-        listaRepTS.add(repTS);
+
+        lista.add(repTS);
         simbolo = "";
         signo = "N";
         valor = "";
         tipoS1 = null;
         tipo = "";
-        
+
+    }
+
+    public void agregarRepATablaSimbolosXBloqueCodigo(String simbolo, String valor, String tipo, int linea, int columna) {
+        ReporteTablaDeSimbolos repTS = new ReporteTablaDeSimbolos(simbolo, tipo, valor, linea, columna);
+
+        listaRepTSXBloqueCodigo.add(repTS);
+        simbolo = "";
+        signo = "N";
+        valor = "";
+        tipoS1 = null;
+        tipo = "";
+
+    }
+
+    public boolean existeFuncion(String nombreFuncion, ArrayList<ReporteCantidadLLamadasFunctions> lista) {
+        boolean exist = false;
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNombreFuncion().equals(nombreFuncion)) {
+                exist = true;
+                lista.get(i).setCantidad(lista.get(i).getCantidad() + 1);
+                i = lista.size();
+            }
+
+        }
+
+        return exist;
     }
 
     public String asignarTipo(Tipo tipo) {
