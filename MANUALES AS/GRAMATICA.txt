@@ -1,0 +1,446 @@
+
+
+-------------------GRÁMATICA------------------
+
+-Asignación de variables: expresiones, operadores aritméticos, de asignación y de comparación 
+
+        AB[C(DC)*] --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S --> UF
+        U --> ABC
+        A --> id
+        B --> = 
+            | += 
+            | -= 
+            | *= 
+            | /= 
+            | **= 
+            | %=
+        C --> número entero
+            | número decimal
+            | cadena
+            | TRUE
+            | FALSE
+        F --> DC
+            | ε
+        D --> +
+            | -
+            | *
+            | /
+            | **
+            | %
+            | ==
+            | !=
+            | >
+            | >=
+            | <
+            | <=
+--------------------------------------------------------------------------------    
+- Arreglos
+            ABC[(DE)*]F --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S1 --> UIF
+        U --> ABC
+            | ε
+        A --> id
+        B --> =
+        C --> [
+        I --> DT
+            | ε
+        D --> número entero
+            | número decimal
+            | A
+            | ε
+        E --> ,
+            | ε
+        F --> ] 
+        T --> EI
+            | ε
+        
+               
+--------------------------------------------------------------------------------
+- Arreglos con llaves
+
+            ABC[J[(DPDE)*]K]^+F --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S2 --> UYF  
+        Y --> JVTY
+            | ε                                    
+        U --> ABC
+        A --> id
+        B --> =
+        C --> [
+        J --> {
+        V --> DPDZ
+        D --> número entero
+            | número decimal
+            | cadena
+            | A
+            | ε
+        P --> :
+            | ε
+        Z --> EV
+            | ε
+        T --> KE
+        K --> }
+        E --> ,
+            | ε 
+        F --> ]
+--------------------------------------------------------------------------------
+
+- Diccionarios
+
+            ABJ[(DPDE)*]K --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S3 --> UY  
+        Y --> VT
+            | ε                                    
+        U --> ABJ
+        A --> id
+        B --> =
+        J --> {
+        V --> DPDZ
+        D --> número entero
+            | número decimal
+            | cadena
+            | A
+            | ε
+        P --> :
+            | ε
+        Z --> EV
+            | ε
+        T --> KE
+        K --> }
+        E --> ,
+            | ε 
+--------------------------------------------------------------------------------
+
+- Asignaciones de variables con comas
+
+            A[(EA)*]BD[(ED)*] --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S4 --> UBT
+        U --> AEU
+            | ε 
+        A --> id    
+        E --> ,
+            | ε 
+        B --> =
+        T --> DET
+            | ε 
+        D --> número entero
+            | número decimal
+            | cadena
+            | A
+--------------------------------------------------------------------------------
+
+- CONDICIONALES IF, ELIF ELSE
+
+            A[(B|(CDC))EL].[(FEL)|(M(B|(CDC))EL(FEL))]^? --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S5 --> AA'WZ
+        A --> if
+        A' --> B
+            | CDC
+        B --> TRUE
+            | FALSE
+        C --> número entero
+            | número decimal
+            | cadena
+            | id
+        D --> ==
+            | !=
+            | >
+            | >=
+            | <
+            | <=
+        W --> ELY
+        Y --> FEL
+            | ε 
+        E --> :
+        L --> #Bloques de código
+            | ε 
+        Z --> MA'W
+            | ε 
+        M --> elif
+        F --> else
+-------------------------------------------------------------------------------- 
+
+- OPERADORES TERNARIOS
+
+            ABCI[(N)^?]CEC --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S6 --> UTW
+        U --> ABC
+        A --> id
+        B --> =
+        C --> cadena
+            | número entero
+            | número decimal
+            | A
+        T --> IN
+        I --> if
+        N --> not
+            | ε 
+        W --> CEC
+        E --> else
+-------------------------------------------------------------------------------- 
+
+- CICLO FOR
+
+            FAIA[M[(C|C')*|(MC'N)*]N]*P --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES    
+        S7 --> UYZ 
+        U --> FAIA
+        F --> for 
+        A --> id
+        I --> in
+        Y --> M
+            | MW
+            | ε 
+        M --> (
+        W --> C 
+            | C'   
+            | ε 
+        C --> número entero
+            | número decimal
+            | cadena
+            | A 
+            | ε 
+        C' --> CZ
+            | C
+        Z --> EC'
+        E --> ,
+            | ε 
+        Z --> NP
+            | P 
+            | ε 
+        N --> )
+        P --> :
+-------------------------------------------------------------------------------- 
+
+- PRINT
+
+            TM[(C)|(A(M(C|C')*N)^+)]*N --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES    
+        S8 --> UYZN 
+        U --> TM
+        T --> print  
+        M --> (
+        N --> )
+        Y --> C
+            | C'
+            | ε 
+        Z --> MN
+            | ε 
+        C --> número entero
+            | número decimal
+            | cadena
+            | id
+            | ε
+        C' --> CZ
+            | C
+        Z --> EC'
+        E --> ,
+            | ε 
+        A --> CH
+        H --> IA
+            | ε
+        I --> .
+            | ε
+-------------------------------------------------------------------------------- 
+
+- FUNCIONES
+
+            DAK[(C|C')*]LP --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES 
+        S9 --> TUV
+        T --> DAK
+        D --> def
+        A --> id
+        K --> (
+        U --> C
+            | C'
+            | ε
+        C --> número entero
+            | número decimal
+            | cadena
+            | A
+        C' --> CZ
+            | C 
+        Z --> EC'
+        E --> ,
+            | ε
+        V --> LP
+        L --> )
+        P --> :   
+-------------------------------------------------------------------------------- 
+
+- VALORES DE RETORNO: YEILD, RETURN
+
+            Y(C|C')^+ --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S10 --> YZ     
+        Y --> yeild 
+            | return
+        Z --> C
+            | C'
+        C --> número entero
+            | número decimal
+            | cadena
+            | id
+        C' --> CX
+            | C
+        X --> EC'
+        E --> ,
+            | +
+            | -
+            | *
+            | /
+            | **
+            | %
+            | ε
+-------------------------------------------------------------------------------- 
+
+- CICLO WHILE
+
+            W(B|CDC)PL --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S11 --> WVY
+        W --> while
+        V --> B 
+            | CDC
+        B --> true 
+            | false 
+        C --> número entero
+            | número decimal
+            | cadena
+            | id
+        D --> ==
+            | !=
+            | >
+            | >=
+            | <
+            | <=
+        Y --> PL
+        P --> :
+        L --> Bloques de código        
+-------------------------------------------------------------------------------- 
+
+- FOR ELSE 
+
+            AK(C|C')*L --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S12 --> JXL
+        J --> AK
+        A --> id
+        K --> ( 
+        X --> C
+            | C'
+            | ε 
+        C --> número entero
+            | número decimal
+            | cadena
+            | A
+        C' --> CZ
+            | C
+        Z --> EC'
+        E --> ,
+            | +
+            | -
+            | *
+            | /
+            | **
+            | %
+            | ε
+        L --> )
+-------------------------------------------------------------------------------- 
+
+- FOR ELSE: if n % x == 0:
+
+            I((CSC)DC)P --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S13 --> IUVP
+        I --> if
+        U --> CSC
+        C --> número entero
+            | número decimal
+            | cadena
+            | id
+        S --> +
+            | -
+            | *
+            | /
+            | **
+            | %
+        V --> DC
+        D --> ==
+            | !=
+            | >
+            | >=
+            | <
+            | <=
+        P --> :
+-------------------------------------------------------------------------------- 
+
+- BREAK
+
+            R --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S14 --> R  
+        R --> break 
+-------------------------------------------------------------------------------- 
+
+- WHILE: contador += 1
+
+            ABC --> EXPRESIÓN REGULAR
+
+    PRODUCCIONES
+        S15 --> V
+        V --> ABC
+        A --> id
+        B --> = 
+            | += 
+            | -= 
+            | *= 
+            | /= 
+            | **= 
+            | %=
+        C --> número  
+-------------------------------------------------------------------------------- 
+ L --> BLOQUE DE CÓDIGO 
+
+ L --> S
+     | S1
+     | S2
+     | S3 
+     | S4
+     | S5
+     | S6
+     | S7
+     | S8
+     | S9
+     | S10
+     | S11
+     | S12
+     | S13
+     | S14
+     | S15                               
+        
+        
+        
