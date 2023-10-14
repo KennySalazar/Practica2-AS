@@ -28,6 +28,7 @@ public class Main {
         vista.setEnabled(true);
         vista.setResizable(true);
         vista.setLocationRelativeTo(null);
+        vista.setTitle("PARSER PY");
         
     }
     

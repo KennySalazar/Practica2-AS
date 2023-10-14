@@ -33,11 +33,25 @@ public class Vista extends javax.swing.JFrame {
      * Creates new form Vista
      */
     numeroLinea numeroLinea;
+    AnalizadorSintactico aS = new AnalizadorSintactico();
 
     public Vista() {
         initComponents();
         numeroLinea = new numeroLinea(entrada1);
         jScrollPane8.setRowHeaderView(numeroLinea);
+        this.filtroTablaGlobal.addItem("Simbolo");
+        this.filtroTablaGlobal.addItem("Tipo");
+        this.filtroTablaGlobal1.addItem("Simbolo");
+        this.filtroTablaGlobal1.addItem("Tipo");
+        this.filtroTablaGlobal2.addItem("Simbolo");
+        this.filtroTablaGlobal2.addItem("Tipo");
+        this.filtroTablaGlobal3.addItem("Simbolo");
+        this.filtroTablaGlobal4.addItem("Simbolo");
+        this.filtroTablaGlobal5.addItem("Nombre Funcion");
+        this.filtroTablaGlobal5.addItem("Cantidad Funciones");
+        this.filtroTablaGlobal6.addItem("Nombre Funcion");
+        this.filtroTablaGlobal6.addItem("Parametros");
+
     }
 
     /**
@@ -69,29 +83,43 @@ public class Vista extends javax.swing.JFrame {
         jDesktopPane9 = new javax.swing.JDesktopPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaSimbolos = new javax.swing.JTable();
+        JTXBuscarTS = new javax.swing.JTextField();
+        filtroTablaGlobal = new javax.swing.JComboBox<>();
         jDesktopPane10 = new javax.swing.JDesktopPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         TSXBloqueCodigo = new javax.swing.JTable();
+        filtroTablaGlobal1 = new javax.swing.JComboBox<>();
+        JTXBuscarTS1 = new javax.swing.JTextField();
         jDesktopPane5 = new javax.swing.JDesktopPane();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jDesktopPane13 = new javax.swing.JDesktopPane();
         jScrollPane9 = new javax.swing.JScrollPane();
         cantidadLlamadasAFuncionTable = new javax.swing.JTable();
+        filtroTablaGlobal5 = new javax.swing.JComboBox<>();
+        JTXBuscarTS5 = new javax.swing.JTextField();
         jDesktopPane14 = new javax.swing.JDesktopPane();
         jScrollPane10 = new javax.swing.JScrollPane();
         parametrosFunciones = new javax.swing.JTable();
+        filtroTablaGlobal6 = new javax.swing.JComboBox<>();
+        JTXBuscarTS6 = new javax.swing.JTextField();
         jDesktopPane12 = new javax.swing.JDesktopPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaCantidadFOM = new javax.swing.JTable();
         cantidadFOMLabel = new javax.swing.JLabel();
+        filtroTablaGlobal2 = new javax.swing.JComboBox<>();
+        JTXBuscarTS2 = new javax.swing.JTextField();
         jDesktopPane6 = new javax.swing.JDesktopPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jDesktopPane15 = new javax.swing.JDesktopPane();
         jScrollPane6 = new javax.swing.JScrollPane();
         tablaDeEL = new javax.swing.JTable();
+        JTXBuscarTS3 = new javax.swing.JTextField();
+        filtroTablaGlobal3 = new javax.swing.JComboBox<>();
         jDesktopPane16 = new javax.swing.JDesktopPane();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaDeES = new javax.swing.JTable();
+        filtroTablaGlobal4 = new javax.swing.JComboBox<>();
+        JTXBuscarTS4 = new javax.swing.JTextField();
         jDesktopPane3 = new javax.swing.JDesktopPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEstados = new javax.swing.JTable();
@@ -276,7 +304,15 @@ public class Vista extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(tablaSimbolos);
 
+        JTXBuscarTS.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTSCaretUpdate(evt);
+            }
+        });
+
         jDesktopPane9.setLayer(jScrollPane4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane9.setLayer(JTXBuscarTS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane9.setLayer(filtroTablaGlobal, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane9Layout = new javax.swing.GroupLayout(jDesktopPane9);
         jDesktopPane9.setLayout(jDesktopPane9Layout);
@@ -284,12 +320,21 @@ public class Vista extends javax.swing.JFrame {
             jDesktopPane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane9Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(filtroTablaGlobal, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JTXBuscarTS, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jDesktopPane9Layout.setVerticalGroup(
             jDesktopPane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane9Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jDesktopPane9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(filtroTablaGlobal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTXBuscarTS, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -309,7 +354,15 @@ public class Vista extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(TSXBloqueCodigo);
 
+        JTXBuscarTS1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTS1CaretUpdate(evt);
+            }
+        });
+
         jDesktopPane10.setLayer(jScrollPane5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane10.setLayer(filtroTablaGlobal1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane10.setLayer(JTXBuscarTS1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane10Layout = new javax.swing.GroupLayout(jDesktopPane10);
         jDesktopPane10.setLayout(jDesktopPane10Layout);
@@ -317,12 +370,22 @@ public class Vista extends javax.swing.JFrame {
             jDesktopPane10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(filtroTablaGlobal1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JTXBuscarTS1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jDesktopPane10Layout.setVerticalGroup(
             jDesktopPane10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane10Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(jDesktopPane10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(filtroTablaGlobal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTXBuscarTS1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -362,7 +425,15 @@ public class Vista extends javax.swing.JFrame {
         ));
         jScrollPane9.setViewportView(cantidadLlamadasAFuncionTable);
 
+        JTXBuscarTS5.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTS5CaretUpdate(evt);
+            }
+        });
+
         jDesktopPane13.setLayer(jScrollPane9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane13.setLayer(filtroTablaGlobal5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane13.setLayer(JTXBuscarTS5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane13Layout = new javax.swing.GroupLayout(jDesktopPane13);
         jDesktopPane13.setLayout(jDesktopPane13Layout);
@@ -371,12 +442,22 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jDesktopPane13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane13Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(filtroTablaGlobal5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(JTXBuscarTS5, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jDesktopPane13Layout.setVerticalGroup(
             jDesktopPane13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane13Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addGroup(jDesktopPane13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTXBuscarTS5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtroTablaGlobal5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -395,21 +476,39 @@ public class Vista extends javax.swing.JFrame {
         ));
         jScrollPane10.setViewportView(parametrosFunciones);
 
+        JTXBuscarTS6.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTS6CaretUpdate(evt);
+            }
+        });
+
         jDesktopPane14.setLayer(jScrollPane10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane14.setLayer(filtroTablaGlobal6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane14.setLayer(JTXBuscarTS6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane14Layout = new javax.swing.GroupLayout(jDesktopPane14);
         jDesktopPane14.setLayout(jDesktopPane14Layout);
         jDesktopPane14Layout.setHorizontalGroup(
             jDesktopPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane14Layout.createSequentialGroup()
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+            .addGroup(jDesktopPane14Layout.createSequentialGroup()
+                .addGroup(jDesktopPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane14Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(filtroTablaGlobal6, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JTXBuscarTS6, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jDesktopPane14Layout.setVerticalGroup(
             jDesktopPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane14Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(jDesktopPane14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTXBuscarTS6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtroTablaGlobal6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -430,8 +529,16 @@ public class Vista extends javax.swing.JFrame {
 
         cantidadFOMLabel.setText("jLabel1");
 
+        JTXBuscarTS2.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTS2CaretUpdate(evt);
+            }
+        });
+
         jDesktopPane12.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane12.setLayer(cantidadFOMLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane12.setLayer(filtroTablaGlobal2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane12.setLayer(JTXBuscarTS2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane12Layout = new javax.swing.GroupLayout(jDesktopPane12);
         jDesktopPane12.setLayout(jDesktopPane12Layout);
@@ -439,17 +546,30 @@ public class Vista extends javax.swing.JFrame {
             jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cantidadFOMLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane12Layout.createSequentialGroup()
+                        .addComponent(cantidadFOMLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(filtroTablaGlobal2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTXBuscarTS2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jDesktopPane12Layout.setVerticalGroup(
             jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane12Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(cantidadFOMLabel)
-                .addGap(38, 38, 38)
+                .addGroup(jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane12Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(cantidadFOMLabel)
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane12Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jDesktopPane12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(filtroTablaGlobal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTXBuscarTS2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
@@ -487,23 +607,42 @@ public class Vista extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(tablaDeEL);
 
+        JTXBuscarTS3.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTS3CaretUpdate(evt);
+            }
+        });
+
         jDesktopPane15.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane15.setLayer(JTXBuscarTS3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane15.setLayer(filtroTablaGlobal3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane15Layout = new javax.swing.GroupLayout(jDesktopPane15);
         jDesktopPane15.setLayout(jDesktopPane15Layout);
         jDesktopPane15Layout.setHorizontalGroup(
             jDesktopPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane15Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(jDesktopPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jDesktopPane15Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(filtroTablaGlobal3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JTXBuscarTS3, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane15Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jDesktopPane15Layout.setVerticalGroup(
             jDesktopPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGroup(jDesktopPane15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTXBuscarTS3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtroTablaGlobal3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Léxicos", jDesktopPane15);
@@ -521,23 +660,40 @@ public class Vista extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(tablaDeES);
 
+        JTXBuscarTS4.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                JTXBuscarTS4CaretUpdate(evt);
+            }
+        });
+
         jDesktopPane16.setLayer(jScrollPane7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane16.setLayer(filtroTablaGlobal4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane16.setLayer(JTXBuscarTS4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane16Layout = new javax.swing.GroupLayout(jDesktopPane16);
         jDesktopPane16.setLayout(jDesktopPane16Layout);
         jDesktopPane16Layout.setHorizontalGroup(
             jDesktopPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane16Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addGroup(jDesktopPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jDesktopPane16Layout.createSequentialGroup()
+                        .addComponent(filtroTablaGlobal4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JTXBuscarTS4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jDesktopPane16Layout.setVerticalGroup(
             jDesktopPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane16Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane16Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jDesktopPane16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTXBuscarTS4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtroTablaGlobal4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         jTabbedPane5.addTab("Sintácticos", jDesktopPane16);
@@ -640,7 +796,7 @@ public class Vista extends javax.swing.JFrame {
         salida.setText("");
         AnalizadorLexico al = new AnalizadorLexico(entrada1.getText());
         ArrayList<Token> tokens = al.analizarCodigoFuente();
-        AnalizadorSintactico aS = new AnalizadorSintactico();
+        aS = new AnalizadorSintactico();
         salida.setText(aS.analizarSintatico(tokens));
         llenarTablaErroresLexicos_Sintacticos(aS.EtokensLexicos, this.tablaDeEL);
         llenarTablaErroresLexicos_Sintacticos(aS.EtokensSintacticos, this.tablaDeES);
@@ -676,6 +832,181 @@ public class Vista extends javax.swing.JFrame {
             darValorALabelCantidadFOM(" ");
         }
     }//GEN-LAST:event_botonAnalizarEntradaActionPerformed
+
+    private void JTXBuscarTSCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTSCaretUpdate
+        // TODO add your handling code here:
+        buscarenTablaSimbolos();
+
+    }//GEN-LAST:event_JTXBuscarTSCaretUpdate
+
+    private void JTXBuscarTS1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTS1CaretUpdate
+        // TODO add your handling code here:
+        buscarenTablaSimbolosXBloqueCodigo();
+    }//GEN-LAST:event_JTXBuscarTS1CaretUpdate
+
+    private void JTXBuscarTS2CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTS2CaretUpdate
+        // TODO add your handling code here:
+        buscarenCantidadDeFunciones();
+    }//GEN-LAST:event_JTXBuscarTS2CaretUpdate
+
+    private void JTXBuscarTS3CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTS3CaretUpdate
+        // TODO add your handling code here:
+        buscarEnTablaErroresLexicos();
+    }//GEN-LAST:event_JTXBuscarTS3CaretUpdate
+
+    private void JTXBuscarTS4CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTS4CaretUpdate
+        // TODO add your handling code here:
+        buscarEnTablaErroresSintacticos();
+    }//GEN-LAST:event_JTXBuscarTS4CaretUpdate
+
+    private void JTXBuscarTS5CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTS5CaretUpdate
+        // TODO add your handling code here:
+        buscarenTablaCantidadDeVecesFuncion();
+    }//GEN-LAST:event_JTXBuscarTS5CaretUpdate
+
+    private void JTXBuscarTS6CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_JTXBuscarTS6CaretUpdate
+        // TODO add your handling code here:
+        buscarenTablaParametrosFuncion();
+    }//GEN-LAST:event_JTXBuscarTS6CaretUpdate
+
+    public void buscarenTablaSimbolos() {
+        if (this.JTXBuscarTS.getText().equalsIgnoreCase("")) {
+            LlenarTablaSimbolos(aS.listaRepTS, this.tablaSimbolos);
+        } else {
+            int num = this.filtroTablaGlobal.getSelectedIndex();
+            ArrayList<ReporteTablaDeSimbolos> rn = new ArrayList<>();
+            for (ReporteTablaDeSimbolos rts : aS.listaRepTS) {
+                if (num == 0) {
+                    if (rts.getSimbolo().contains(this.JTXBuscarTS.getText())) {
+                        rn.add(rts);
+                    }
+                } else if (num == 1) {
+                    if (rts.getTipo().contains(this.JTXBuscarTS.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            LlenarTablaSimbolos(rn, this.tablaSimbolos);
+        }
+    }
+
+    public void buscarenTablaSimbolosXBloqueCodigo() {
+        if (this.JTXBuscarTS1.getText().equalsIgnoreCase("")) {
+            LlenarTablaSimbolos(aS.listaRepTSXBloqueCodigo, this.TSXBloqueCodigo);
+        } else {
+            int num = this.filtroTablaGlobal1.getSelectedIndex();
+            ArrayList<ReporteTablaDeSimbolos> rn = new ArrayList<>();
+            for (ReporteTablaDeSimbolos rts : aS.listaRepTSXBloqueCodigo) {
+                if (num == 0) {
+                    if (rts.getSimbolo().contains(this.JTXBuscarTS1.getText())) {
+                        rn.add(rts);
+                    }
+                } else if (num == 1) {
+                    if (rts.getTipo().contains(this.JTXBuscarTS1.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            LlenarTablaSimbolos(rn, this.TSXBloqueCodigo);
+        }
+    }
+
+    public void buscarenCantidadDeFunciones() {
+        if (this.JTXBuscarTS2.getText().equalsIgnoreCase("")) {
+            LlenarTablaSimbolos(aS.cantidadFuncionesOMetodos, this.tablaCantidadFOM);
+        } else {
+            int num = this.filtroTablaGlobal2.getSelectedIndex();
+            ArrayList<ReporteTablaDeSimbolos> rn = new ArrayList<>();
+            for (ReporteTablaDeSimbolos rts : aS.cantidadFuncionesOMetodos) {
+                if (num == 0) {
+                    if (rts.getSimbolo().contains(this.JTXBuscarTS2.getText())) {
+                        rn.add(rts);
+                    }
+                } else if (num == 1) {
+                    if (rts.getTipo().contains(this.JTXBuscarTS2.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            LlenarTablaSimbolos(rn, this.tablaCantidadFOM);
+        }
+    }
+
+    public void buscarEnTablaErroresLexicos() {
+        if (this.JTXBuscarTS3.getText().equalsIgnoreCase("")) {
+            llenarTablaErroresLexicos_Sintacticos(aS.EtokensLexicos, this.tablaDeEL);
+        } else {
+            int num = this.filtroTablaGlobal3.getSelectedIndex();
+            ArrayList<Token> rn = new ArrayList<>();
+            for (Token rts : aS.EtokensLexicos) {
+                if (num == 0) {
+                    if (rts.getLexema().contains(this.JTXBuscarTS3.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            llenarTablaErroresLexicos_Sintacticos(rn, this.tablaDeEL);
+        }
+    }
+
+    public void buscarEnTablaErroresSintacticos() {
+        if (this.JTXBuscarTS4.getText().equalsIgnoreCase("")) {
+            llenarTablaErroresLexicos_Sintacticos(aS.EtokensSintacticos, this.tablaDeES);
+        } else {
+            int num = this.filtroTablaGlobal4.getSelectedIndex();
+            ArrayList<Token> rn = new ArrayList<>();
+            for (Token rts : aS.EtokensSintacticos) {
+                if (num == 0) {
+                    if (rts.getLexema().contains(this.JTXBuscarTS4.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            llenarTablaErroresLexicos_Sintacticos(rn, this.tablaDeES);
+        }
+    }
+
+    public void buscarenTablaCantidadDeVecesFuncion() {
+        if (this.JTXBuscarTS5.getText().equalsIgnoreCase("")) {
+            llenarTablaCantidadVecesLlamadaAFuncion(aS.funcionesLLamadasCantidad, this.cantidadLlamadasAFuncionTable);
+        } else {
+            int num = this.filtroTablaGlobal5.getSelectedIndex();
+            ArrayList<ReporteCantidadLLamadasFunctions> rn = new ArrayList<>();
+            for (ReporteCantidadLLamadasFunctions rts : aS.funcionesLLamadasCantidad) {
+                if (num == 0) {
+                    if (rts.getNombreFuncion().contains(this.JTXBuscarTS5.getText())) {
+                        rn.add(rts);
+                    }
+                } else if (num == 1) {
+                    if (String.valueOf(rts.getCantidad()).contains(this.JTXBuscarTS5.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            llenarTablaCantidadVecesLlamadaAFuncion(rn, this.cantidadLlamadasAFuncionTable);
+        }
+    }
+
+    public void buscarenTablaParametrosFuncion() {
+        if (this.JTXBuscarTS6.getText().equalsIgnoreCase("")) {
+            llenarTablaParametrosFunciones(aS.funcionesYsusParametros, this.parametrosFunciones);
+        } else {
+            int num = this.filtroTablaGlobal6.getSelectedIndex();
+            ArrayList<FuncionesYSusParametros> rn = new ArrayList<>();
+            for (FuncionesYSusParametros rts : aS.funcionesYsusParametros) {
+                if (num == 0) {
+                    if (rts.getNombre().contains(this.JTXBuscarTS6.getText())) {
+                        rn.add(rts);
+                    }
+                } else if (num == 1) {
+                    if (rts.getParametros().contains(this.JTXBuscarTS6.getText())) {
+                        rn.add(rts);
+                    }
+                }
+            }
+            llenarTablaParametrosFunciones(rn, this.parametrosFunciones);
+        }
+    }
 
     public void darValorALabelCantidadFOM(String valor) {
         this.cantidadFOMLabel.setText(valor);
@@ -827,18 +1158,32 @@ public class Vista extends javax.swing.JFrame {
                 tabla1.addRow(columna);
             }
             tabla.setModel(tabla1);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
         }
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CargarDatos1;
+    private javax.swing.JTextField JTXBuscarTS;
+    private javax.swing.JTextField JTXBuscarTS1;
+    private javax.swing.JTextField JTXBuscarTS2;
+    private javax.swing.JTextField JTXBuscarTS3;
+    private javax.swing.JTextField JTXBuscarTS4;
+    private javax.swing.JTextField JTXBuscarTS5;
+    private javax.swing.JTextField JTXBuscarTS6;
     private javax.swing.JTable TSXBloqueCodigo;
     private javax.swing.JButton botonAnalizarEntrada;
     private javax.swing.JLabel cantidadFOMLabel;
     private javax.swing.JTable cantidadLlamadasAFuncionTable;
     private javax.swing.JTextArea entrada1;
+    private javax.swing.JComboBox<String> filtroTablaGlobal;
+    private javax.swing.JComboBox<String> filtroTablaGlobal1;
+    private javax.swing.JComboBox<String> filtroTablaGlobal2;
+    private javax.swing.JComboBox<String> filtroTablaGlobal3;
+    private javax.swing.JComboBox<String> filtroTablaGlobal4;
+    private javax.swing.JComboBox<String> filtroTablaGlobal5;
+    private javax.swing.JComboBox<String> filtroTablaGlobal6;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane10;
     private javax.swing.JDesktopPane jDesktopPane12;
