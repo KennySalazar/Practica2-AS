@@ -22,7 +22,7 @@ public class AnalizadorSintactico {
 
     public ArrayList<String> erroresSintacticos;
     public ArrayList<String> erroresLexicos;
-    public ArrayList<Token> EtokensLexicos;
+    public ArrayList<Token> EtokensLexicos; 
     public ArrayList<Token> EtokensSintacticos;//errores
     int estadoActual = 0;
     public DefaultTableModel tabla1 = new DefaultTableModel();
